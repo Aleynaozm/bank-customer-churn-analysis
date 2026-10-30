@@ -3,5 +3,5 @@ __pycache__/
 .ipynb_checkpoints/
 .DS_Store
 data/*.csv
+!data/customers.csv
 .env
-models/
