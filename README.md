@@ -1,5 +1,7 @@
 # Banka Müşteri Churn Analizi
 
+**Canlı demo:** https://bank-customer-churn-analysis-ssvpufssnxyhsygyscgvaa.streamlit.app
+
 Perakende banka müşteri kitlesinin uçtan uca churn (müşteri terk) analizi: PostgreSQL'de SQL
 keşfi, Python ile EDA, açıklanabilir bir XGBoost modeli (SHAP) ve interaktif Streamlit paneli.
 
