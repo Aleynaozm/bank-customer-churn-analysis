@@ -2,13 +2,10 @@
 
 **Canlı demo:** https://bank-customer-churn-analysis-ssvpufssnxyhsygyscgvaa.streamlit.app
 
-Perakende banka müşteri kitlesinin uçtan uca churn (müşteri terk) analizi: PostgreSQL'de SQL
-keşfi, Python ile EDA, açıklanabilir bir XGBoost modeli (SHAP) ve interaktif Streamlit paneli.
+Perakende banka müşteri kitlesinin uçtan uca churn (müşteri terk) analizi: PostgreSQL'de SQL keşfi, Python ile EDA, açıklanabilir bir XGBoost modeli (SHAP) ve interaktif Streamlit paneli.
 
 ## Problem
-Mevcut bir müşteriyi kaybetmek, yeni müşteri kazanmaktan çok daha pahalıya mal olur. Amaç:
-(1) kimin, neden ayrıldığını anlamak ve (2) ayrılma riski yüksek müşterileri işaretleyen bir
-model kurarak elinde tutma (retention) eforunu rastgele değil, hedefli harcamak.
+Mevcut bir müşteriyi kaybetmek, yeni müşteri kazanmaktan çok daha pahalıya mal olur. Amaç: (1) kimin, neden ayrıldığını anlamak ve (2) ayrılma riski yüksek müşterileri işaretleyen bir model kurarak elinde tutma (retention) eforunu rastgele değil, hedefli harcamak.
 
 ## Veri Seti
 Kaggle "Churn Modelling" veri seti (shrutimechlearn) — 10.000 müşteri, 14 kolon.
@@ -47,29 +44,23 @@ PostgreSQL · Python · pandas · matplotlib/seaborn · scikit-learn · XGBoost 
 
 ## Model Sonuçları
 Tabakalı %80/%20 bölme (eğitim 8.000 / test 2.000), kategorik değişkenler one-hot kodlandı.
-"Hiç kimse ayrılmaz" şeklindeki basit bir baseline bile %79.6 doğruluk verirken tek bir
-ayrılan müşteriyi bile yakalamıyor — bu yüzden burada hedef metrik doğruluk değil, **recall**.
+"Hiç kimse ayrılmaz" şeklindeki basit bir baseline bile %79.6 doğruluk verirken tek bir ayrılan müşteriyi bile yakalamıyor — bu yüzden burada hedef metrik doğruluk değil, **recall**.
 
 | Model | ROC-AUC | Precision | Recall | F1 |
 | --- | --- | --- | --- | --- |
 | Lojistik regresyon | 0.782 | 0.399 | 0.708 | 0.510 |
 | XGBoost | **0.865** | **0.513** | **0.727** | **0.602** |
 
-XGBoost'un çapraz doğrulama ROC-AUC değeri 0.765 ± 0.014, test skoruna çok yakın; yani model
-overfit etmiyor. Varsayılan eşikte ayrılan müşterilerin ~%73'ünü yakalıyor ve işaretlediği
-müşterilerin yaklaşık yarısı gerçekten ayrılıyor (temel oran %20). Bu listeye kurulan bir
-retention kampanyası, herkesi aramaya kıyasla yaklaşık 2.5 kat daha verimli.
+XGBoost'un çapraz doğrulama ROC-AUC değeri 0.765 ± 0.014, test skoruna çok yakın; yani model overfit etmiyor. Varsayılan eşikte ayrılan müşterilerin ~%73'ünü yakalıyor ve işaretlediği müşterilerin yaklaşık yarısı gerçekten ayrılıyor (temel oran %20). Bu listeye kurulan bir retention kampanyası, herkesi aramaya kıyasla yaklaşık 2.5 kat daha verimli.
 
 ## Model Neden Böyle Diyor? (SHAP)
 - **age** açık ara en güçlü etken; etkisi doğrusal değil ve 45–59 bandında yoğunlaşıyor
-- **num_of_products** U şeklinde: 1 ürünli ve 3–4 ürünli müşteriler riskli, 2 ürünli müşteriler
-  en sadık — bu deseni yalnızca ağaç tabanlı bir model yakalayabilir
+- **num_of_products** U şeklinde: 1 ürünli ve 3–4 ürünli müşteriler riskli, 2 ürünli müşteriler en sadık — bu deseni yalnızca ağaç tabanlı bir model yakalayabilir
 - **is_active_member = 0** riski yukarı itiyor; yüksek **balance** ve **Almanya** makul düzeyde risk ekliyor
 - **credit_score**, **tenure**, **estimated_salary** ve **has_cr_card** neredeyse hiç katkı sağlamıyor
 
 ## Panel
-`dashboard/app.py` — KPI kartları, ülkeye ve ürün sayısına göre churn grafikleri, girilen bir
-müşteri profili için ayrılma olasılığı döndüren form.
+`dashboard/app.py` — KPI kartları, ülkeye ve ürün sayısına göre churn grafikleri, girilen bir müşteri profili için ayrılma olasılığı döndüren form.
 
 ## Nasıl Çalıştırılır
 ```bash
@@ -86,7 +77,6 @@ Son olarak:
 ```bash
 streamlit run dashboard/app.py
 ```
-
 
 ## Veri Kaynağı
 Kaggle — Churn Modelling (shrutimechlearn): https://www.kaggle.com/shrutimechlearn/churn-modelling
