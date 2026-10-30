@@ -85,6 +85,7 @@ Son olarak:
 streamlit run dashboard/app.py
 ```
 
+
 ## Veri Kaynağı
 Kaggle — Churn Modelling (shrutimechlearn): https://www.kaggle.com/shrutimechlearn/churn-modelling
 
